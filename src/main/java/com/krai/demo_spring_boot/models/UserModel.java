@@ -1,29 +1,32 @@
 package com.krai.demo_spring_boot.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class UserModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
     private String email;
     private String password;
 
-    public UserModel(String id, String name, String email, String password) {
-        this.id = id;
+    public UserModel() {
+    }
+
+    public UserModel(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
-    public UserModel(String id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
