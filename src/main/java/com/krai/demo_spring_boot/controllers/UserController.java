@@ -1,10 +1,14 @@
 package com.krai.demo_spring_boot.controllers;
 
-import com.krai.demo_spring_boot.dtos.UserRequestDto;
-import com.krai.demo_spring_boot.dtos.UserResponseDto;
+import com.krai.demo_spring_boot.dtos.UserCreateDto;
+import com.krai.demo_spring_boot.dtos.UserListDto;
+import com.krai.demo_spring_boot.dtos.UserUpdateDto;
 import com.krai.demo_spring_boot.models.UserModel;
 import com.krai.demo_spring_boot.repository.UserRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,44 +22,50 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
 
-  public UserController(UserRepository userRepository) {
+  public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @GetMapping("/users")
-  public List<UserResponseDto> getUsers() {
+  public List<UserListDto> getUsers() {
     return userRepository.findAll().stream()
         .map(
             userModel -> {
-              return new UserResponseDto(
-                  userModel.getId(), userModel.getName(), userModel.getEmail());
+              return new UserListDto(userModel.getId(), userModel.getName(), userModel.getEmail());
             })
         .toList();
   }
 
   @GetMapping("/user/{id}")
-  public UserResponseDto getUserById(@PathVariable String id) {
+  public UserListDto getUserById(@PathVariable String id) {
     return userRepository
         .findById(id)
         .map(
             userModel -> {
-              return new UserResponseDto(
-                  userModel.getId(), userModel.getName(), userModel.getEmail());
+              return new UserListDto(userModel.getId(), userModel.getName(), userModel.getEmail());
             })
         .orElse(null);
   }
 
   @PostMapping("/user")
-  public String addUser(@RequestBody UserRequestDto userDto) {
+  public String addUser(@Valid @RequestBody UserCreateDto userDto) {
     UserModel userModel =
-        new UserModel(userDto.getName(), userDto.getEmail(), userDto.getPassword());
+        new UserModel(
+            userDto.getName(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()));
     userRepository.save(userModel);
     return "User added successfully";
   }
 
   @PutMapping("/user/{id}")
-  public String updateUser(@PathVariable String id, @RequestBody UserRequestDto userDto) {
+  public String updateUser(
+      @PathVariable @NotEmpty String id, @Valid @RequestBody UserUpdateDto userDto) {
+    if (id.trim().isEmpty()) {
+      return "User ID cannot be empty";
+    }
+
     return userRepository
         .findById(id)
         .map(
@@ -79,7 +89,7 @@ public class UserController {
   }
 
   @GetMapping("/user/search")
-  public List<UserResponseDto> getUserSearch(@RequestBody UserRequestDto userDto) {
+  public List<UserListDto> getUserSearch(@RequestBody UserCreateDto userDto) {
     return userRepository.findAll().stream()
         .filter(
             userModel -> {
@@ -96,8 +106,7 @@ public class UserController {
             })
         .map(
             userModel -> {
-              return new UserResponseDto(
-                  userModel.getId(), userModel.getName(), userModel.getEmail());
+              return new UserListDto(userModel.getId(), userModel.getName(), userModel.getEmail());
             })
         .toList();
   }

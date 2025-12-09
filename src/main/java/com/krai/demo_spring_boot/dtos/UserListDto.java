@@ -1,14 +1,18 @@
 package com.krai.demo_spring_boot.dtos;
 
-public class UserRequestDto {
+public class UserListDto {
+    private String id;
     private String name;
     private String email;
-    private String password;
 
-    public UserRequestDto(String name, String email, String password) {
+    public UserListDto(String id, String name, String email) {
+        this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -17,9 +21,5 @@ public class UserRequestDto {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 }

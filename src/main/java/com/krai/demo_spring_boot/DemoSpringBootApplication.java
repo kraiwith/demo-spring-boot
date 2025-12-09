@@ -14,7 +14,7 @@ public class DemoSpringBootApplication {
 	}
 
 	@GetMapping("/hello")
-	public String hello() {
+	public String home() {
 		return "Hello, World!";
 	}
 }
