@@ -1,7 +1,7 @@
 package com.krai.demo_spring_boot.controllers;
 
 import com.krai.demo_spring_boot.dtos.UserCreateDto;
-import com.krai.demo_spring_boot.dtos.UserListDto;
+import com.krai.demo_spring_boot.dtos.UserResponseDto;
 import com.krai.demo_spring_boot.dtos.UserUpdateDto;
 import com.krai.demo_spring_boot.models.UserModel;
 import com.krai.demo_spring_boot.repository.UserRepository;
@@ -30,22 +30,22 @@ public class UserController {
   }
 
   @GetMapping("/users")
-  public List<UserListDto> getUsers() {
+  public List<UserResponseDto> getUsers() {
     return userRepository.findAll().stream()
         .map(
             userModel -> {
-              return new UserListDto(userModel.getId(), userModel.getName(), userModel.getEmail());
+              return new UserResponseDto(userModel.getId(), userModel.getName(), userModel.getEmail());
             })
         .toList();
   }
 
   @GetMapping("/user/{id}")
-  public UserListDto getUserById(@PathVariable String id) {
+  public UserResponseDto getUserById(@PathVariable String id) {
     return userRepository
         .findById(id)
         .map(
             userModel -> {
-              return new UserListDto(userModel.getId(), userModel.getName(), userModel.getEmail());
+              return new UserResponseDto(userModel.getId(), userModel.getName(), userModel.getEmail());
             })
         .orElse(null);
   }
@@ -80,7 +80,7 @@ public class UserController {
 
   @DeleteMapping("/user/{id}")
   public String deleteUser(@PathVariable String id) {
-    if (userRepository.existsById(id)) {
+    if (!id.trim().isEmpty() && userRepository.existsById(id)) {
       userRepository.deleteById(id);
       return "User deleted successfully";
     } else {
@@ -89,7 +89,7 @@ public class UserController {
   }
 
   @GetMapping("/user/search")
-  public List<UserListDto> getUserSearch(@RequestBody UserCreateDto userDto) {
+  public List<UserResponseDto> getUserSearch(@RequestBody UserCreateDto userDto) {
     return userRepository.findAll().stream()
         .filter(
             userModel -> {
@@ -106,7 +106,7 @@ public class UserController {
             })
         .map(
             userModel -> {
-              return new UserListDto(userModel.getId(), userModel.getName(), userModel.getEmail());
+              return new UserResponseDto(userModel.getId(), userModel.getName(), userModel.getEmail());
             })
         .toList();
   }
