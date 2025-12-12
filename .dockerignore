@@ -13,8 +13,7 @@ target/
 .git/
 .gitignore
 
-# Docker
-Dockerfile*
+# Docker (only exclude docker-compose)
 docker-compose*.yml
 
 # Documentation
