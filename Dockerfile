@@ -20,17 +20,16 @@ RUN ./mvnw package -DskipTests
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-# Install curl for health checks and create non-root user
-RUN apk add --no-cache curl && \
-    addgroup -S spring && adduser -S spring -G spring
+# Create a non-root user for security
+RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 
-# Copy jar from build stage
-COPY --from=build /app/target/*.jar app.jar
+# Copy the jar from build stage
+ARG JAR_FILE=target/*.jar
+COPY --from=build /app/${JAR_FILE} app.jar
 
-# Render uses PORT environment variable
-ENV PORT=8080
-EXPOSE ${PORT}
+# Expose the application port
+EXPOSE 8080
 
-# Run the application with dynamic port binding
-ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT} -jar app.jar"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
