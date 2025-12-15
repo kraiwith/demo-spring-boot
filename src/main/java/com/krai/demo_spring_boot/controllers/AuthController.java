@@ -2,11 +2,11 @@ package com.krai.demo_spring_boot.controllers;
 
 import com.krai.demo_spring_boot.dtos.LoginRequestDto;
 import com.krai.demo_spring_boot.dtos.LoginResponseDto;
+import com.krai.demo_spring_boot.dtos.RegisterRequestDto;
 import com.krai.demo_spring_boot.dtos.UserResponseDto;
 import com.krai.demo_spring_boot.models.UserModel;
 import com.krai.demo_spring_boot.repository.UserRepository;
 import com.krai.demo_spring_boot.utils.JwtUtil;
-import ch.qos.logback.core.util.SystemInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -58,4 +57,17 @@ public class AuthController {
             () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
     return new UserResponseDto(user.getId(), user.getName(), user.getEmail());
   }
+
+  @PostMapping("/register")
+  public String register(@Valid @RequestBody RegisterRequestDto body) {
+    if (this.userRepository.findByEmail(body.getEmail()).isPresent()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already in use");
+    }
+
+    String hashedPassword = passwordEncoder.encode(body.getPassword());
+    UserModel newUser = new UserModel(body.getName(), body.getEmail(), hashedPassword);
+    this.userRepository.save(newUser);
+
+    return "Registration successful";
+  }  
 }
