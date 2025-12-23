@@ -1,30 +1,65 @@
 package com.krai.demo_spring_boot.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "categories")
 public class CategoryModel {
-    private Long id;
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public CategoryModel() {
-    }
+  @Column(nullable = false)
+  private String name;
 
-    public CategoryModel(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+  @Column(nullable = true)
+  private Long parentCategoryId;
 
-    public Long getId() {
-        return id;
-    }
+  @Column(nullable = false)
+  private Status status;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public CategoryModel() {}
 
-    public String getName() {
-        return name;
-    }
+  public CategoryModel(String name, Long parentCategoryId, Status status) {
+    this.name = name;
+    this.parentCategoryId = parentCategoryId;
+    this.status = status;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Long getParentCategoryId() {
+    return parentCategoryId;
+  }
+
+  public void setParentCategoryId(Long parentCategoryId) {
+    this.parentCategoryId = parentCategoryId;
+  }
+
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
 }
