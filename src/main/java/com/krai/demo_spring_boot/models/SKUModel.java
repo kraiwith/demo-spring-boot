@@ -1,11 +1,16 @@
 package com.krai.demo_spring_boot.models;
 
+import com.krai.demo_spring_boot.enums.StatusEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "skus")
@@ -15,23 +20,27 @@ public class SKUModel {
   private Long id;
 
   @Column(nullable = false)
+  private String name;
+
+  @Column(nullable = false)
   private Double price;
 
   @Column(nullable = false)
   private Integer stockQuantity;
 
-  @Column(nullable = true)
-  private Integer reorderLevel;
+  private StatusEnum status = StatusEnum.ACTIVE;
 
-  private Status status;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "fk_product_id", nullable = false)
+  @JsonBackReference
+  private ProductModel productModel;
 
   public SKUModel() {}
 
-  public SKUModel(Double price, Integer stockQuantity, Integer reorderLevel, Status status) {
+  public SKUModel(String name, Double price, Integer stockQuantity) {
+    this.name = name;
     this.price = price;
     this.stockQuantity = stockQuantity;
-    this.reorderLevel = reorderLevel;
-    this.status = status;
   }
 
   public Long getId() {
@@ -40,6 +49,14 @@ public class SKUModel {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public Double getPrice() {
@@ -58,19 +75,19 @@ public class SKUModel {
     this.stockQuantity = stockQuantity;
   }
 
-  public Integer getReorderLevel() {
-    return reorderLevel;
-  }
-
-  public void setReorderLevel(Integer reorderLevel) {
-    this.reorderLevel = reorderLevel;
-  }
-
-  public Status getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(Status status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
+  }
+
+  public ProductModel getProductModel() {
+    return productModel;
+  }
+
+  public void setProductModel(ProductModel productModel) {
+    this.productModel = productModel;
   }
 }

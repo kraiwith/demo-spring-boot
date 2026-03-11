@@ -1,10 +1,13 @@
 package com.krai.demo_spring_boot.models;
 
+import com.krai.demo_spring_boot.enums.StatusEnum;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
 
@@ -21,29 +24,21 @@ public class ProductModel {
   @Column(length = 1000)
   private String description;
 
-  private List<Long> skus;
+  @OneToMany(mappedBy = "productModel", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<MediaModel> medias;
+  
+  private StatusEnum status = StatusEnum.ACTIVE;
 
-  private Long categoryId;
-
-  private List<Long> medias;
-
-  private Status status;
+  @OneToMany(mappedBy = "productModel", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<SKUModel> skus;
 
   public ProductModel() {}
 
-  public ProductModel(
-      String name,
-      String description,
-      List<Long> skus,
-      Long categoryId,
-      List<Long> medias,
-      Status status) {
+  public ProductModel(String name, String description, List<SKUModel> skus, List<MediaModel> medias) {
     this.name = name;
     this.description = description;
     this.skus = skus;
-    this.categoryId = categoryId;
     this.medias = medias;
-    this.status = status;
   }
 
   public Long getId() {
@@ -70,35 +65,27 @@ public class ProductModel {
     this.description = description;
   }
 
-  public List<Long> getSKUs() {
+  public List<SKUModel> getSKUs() {
     return skus;
   }
 
-  public void setSKUs(List<Long> skus) {
+  public void setSKUs(List<SKUModel> skus) {
     this.skus = skus;
   }
 
-  public Long getCategoryId() {
-    return categoryId;
-  }
-
-  public void setCategoryId(Long categoryId) {
-    this.categoryId = categoryId;
-  }
-
-  public List<Long> getMedias() {
+  public List<MediaModel> getMedias() {
     return medias;
   }
 
-  public void setMedias(List<Long> medias) {
+  public void setMedias(List<MediaModel> medias) {
     this.medias = medias;
   }
 
-  public Status getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(Status status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 }
