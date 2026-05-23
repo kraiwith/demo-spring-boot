@@ -1,25 +1,28 @@
 package com.krai.demo_spring_boot.dtos;
 
 import com.krai.demo_spring_boot.enums.MediaTypeEnum;
-import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class ProductMediaRequestDto {
-    @Column(nullable = false)
-    private String url;
+  @NotBlank(message = "Media URL is required")
+  private String url;
 
-    @Column(nullable = false)
-    private MediaTypeEnum type;
+  @NotNull(message = "Media type is required")
+  private MediaTypeEnum type;
 
-    public ProductMediaRequestDto(String url, MediaTypeEnum type) {
-        this.url = url;
-        this.type = type;
-    }
+  public ProductMediaRequestDto() {}
 
-    public String getUrl() {
-        return url;
-    }
+  public ProductMediaRequestDto(String url, MediaTypeEnum type) {
+    this.url = url;
+    this.type = type;
+  }
 
-    public MediaTypeEnum getType() {
-        return type;
-    }
+  public String getUrl() {
+    return url;
+  }
+
+  public MediaTypeEnum getType() {
+    return type;
+  }
 }

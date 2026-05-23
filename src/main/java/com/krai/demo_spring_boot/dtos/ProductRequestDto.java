@@ -1,7 +1,9 @@
 package com.krai.demo_spring_boot.dtos;
 
 import com.krai.demo_spring_boot.enums.StatusEnum;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class ProductRequestDto {
@@ -10,13 +12,15 @@ public class ProductRequestDto {
 
   private String description;
 
-  @NotBlank(message = "At least one SKU is required")
+  @Valid
+  @NotEmpty(message = "At least one SKU is required")
   private List<ProductSKURequestDto> skus;
 
   private String categoryName;
 
   private Long parentCategoryId;
 
+  @Valid
   private List<ProductMediaRequestDto> medias;
 
   private StatusEnum status;

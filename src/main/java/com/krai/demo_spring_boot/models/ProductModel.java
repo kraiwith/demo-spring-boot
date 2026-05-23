@@ -9,7 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.List;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "products")
@@ -26,11 +29,18 @@ public class ProductModel {
 
   @OneToMany(mappedBy = "productModel", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<MediaModel> medias;
-  
+
   private StatusEnum status = StatusEnum.ACTIVE;
 
   @OneToMany(mappedBy = "productModel", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<SKUModel> skus;
+
+  @CreationTimestamp
+  @Column(updatable = false)
+  private LocalDateTime createdAt;
+
+  @UpdateTimestamp
+  private LocalDateTime updatedAt;
 
   public ProductModel() {}
 
@@ -87,5 +97,13 @@ public class ProductModel {
 
   public void setStatus(StatusEnum status) {
     this.status = status;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
   }
 }

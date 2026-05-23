@@ -1,0 +1,156 @@
+.swagger-theme-toggle {
+  border: 1px solid #6b7280;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #111827;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  margin-left: auto;
+  min-height: 34px;
+  padding: 0 12px;
+}
+
+.swagger-theme-toggle:hover,
+.swagger-theme-toggle:focus-visible {
+  border-color: #2563eb;
+  outline: none;
+}
+
+.swagger-theme-toggle--floating {
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+  position: fixed;
+  right: 16px;
+  top: 16px;
+  z-index: 10000;
+}
+
+:root[data-swagger-theme="dark"] {
+  color-scheme: dark;
+}
+
+:root[data-swagger-theme="dark"] body,
+:root[data-swagger-theme="dark"] .swagger-ui,
+:root[data-swagger-theme="dark"] .swagger-ui .scheme-container {
+  background: #0f172a;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .topbar {
+  background: #020617;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .topbar .download-url-wrapper input[type="text"] {
+  background: #111827;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+:root[data-swagger-theme="dark"] .swagger-theme-toggle {
+  background: #1f2937;
+  border-color: #4b5563;
+  color: #f9fafb;
+}
+
+:root[data-swagger-theme="dark"] .swagger-theme-toggle:hover,
+:root[data-swagger-theme="dark"] .swagger-theme-toggle:focus-visible {
+  border-color: #60a5fa;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui,
+:root[data-swagger-theme="dark"] .swagger-ui .info .title,
+:root[data-swagger-theme="dark"] .swagger-ui .info li,
+:root[data-swagger-theme="dark"] .swagger-ui .info p,
+:root[data-swagger-theme="dark"] .swagger-ui .info table,
+:root[data-swagger-theme="dark"] .swagger-ui .opblock-tag,
+:root[data-swagger-theme="dark"] .swagger-ui .opblock .opblock-summary-description,
+:root[data-swagger-theme="dark"] .swagger-ui .opblock .opblock-summary-operation-id,
+:root[data-swagger-theme="dark"] .swagger-ui .opblock .opblock-summary-path,
+:root[data-swagger-theme="dark"] .swagger-ui .opblock-description-wrapper p,
+:root[data-swagger-theme="dark"] .swagger-ui .parameter__name,
+:root[data-swagger-theme="dark"] .swagger-ui .parameter__type,
+:root[data-swagger-theme="dark"] .swagger-ui .parameter__deprecated,
+:root[data-swagger-theme="dark"] .swagger-ui .response-col_status,
+:root[data-swagger-theme="dark"] .swagger-ui .response-col_description,
+:root[data-swagger-theme="dark"] .swagger-ui table thead tr td,
+:root[data-swagger-theme="dark"] .swagger-ui table thead tr th,
+:root[data-swagger-theme="dark"] .swagger-ui label,
+:root[data-swagger-theme="dark"] .swagger-ui section.models h4,
+:root[data-swagger-theme="dark"] .swagger-ui section.models h5,
+:root[data-swagger-theme="dark"] .swagger-ui .model-title,
+:root[data-swagger-theme="dark"] .swagger-ui .model {
+  color: #e5e7eb;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui a,
+:root[data-swagger-theme="dark"] .swagger-ui .model-toggle::after {
+  color: #93c5fd;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .opblock,
+:root[data-swagger-theme="dark"] .swagger-ui section.models,
+:root[data-swagger-theme="dark"] .swagger-ui section.models .model-container,
+:root[data-swagger-theme="dark"] .swagger-ui .responses-inner,
+:root[data-swagger-theme="dark"] .swagger-ui .opblock-body pre,
+:root[data-swagger-theme="dark"] .swagger-ui .highlight-code,
+:root[data-swagger-theme="dark"] .swagger-ui .parameters-container,
+:root[data-swagger-theme="dark"] .swagger-ui .responses-wrapper {
+  background: #111827;
+  border-color: #334155;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .opblock .opblock-section-header {
+  background: #1f2937;
+  box-shadow: none;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .opblock .tab-header .tab-item.active h4 span::after {
+  background: #60a5fa;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui input,
+:root[data-swagger-theme="dark"] .swagger-ui select,
+:root[data-swagger-theme="dark"] .swagger-ui textarea {
+  background: #020617;
+  border-color: #475569;
+  color: #f8fafc;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui input::placeholder,
+:root[data-swagger-theme="dark"] .swagger-ui textarea::placeholder {
+  color: #94a3b8;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .btn,
+:root[data-swagger-theme="dark"] .swagger-ui .btn.authorize,
+:root[data-swagger-theme="dark"] .swagger-ui .authorization__btn {
+  background: #1f2937;
+  border-color: #64748b;
+  color: #f8fafc;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .btn:hover,
+:root[data-swagger-theme="dark"] .swagger-ui .btn.authorize:hover {
+  border-color: #93c5fd;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .dialog-ux .modal-ux {
+  background: #111827;
+  border-color: #334155;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .dialog-ux .modal-ux-header {
+  background: #020617;
+  border-color: #334155;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui .dialog-ux .modal-ux-content,
+:root[data-swagger-theme="dark"] .swagger-ui .dialog-ux .modal-ux-header h3 {
+  color: #e5e7eb;
+}
+
+:root[data-swagger-theme="dark"] .swagger-ui svg,
+:root[data-swagger-theme="dark"] .swagger-ui svg path {
+  fill: #e5e7eb;
+}

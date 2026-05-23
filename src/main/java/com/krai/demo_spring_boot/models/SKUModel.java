@@ -1,5 +1,6 @@
 package com.krai.demo_spring_boot.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.krai.demo_spring_boot.enums.StatusEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +11,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.time.LocalDateTime;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "skus")
@@ -34,6 +37,13 @@ public class SKUModel {
   @JoinColumn(name = "fk_product_id", nullable = false)
   @JsonBackReference
   private ProductModel productModel;
+
+  @CreationTimestamp
+  @Column(updatable = false)
+  private LocalDateTime createdAt;
+
+  @UpdateTimestamp
+  private LocalDateTime updatedAt;
 
   public SKUModel() {}
 
@@ -89,5 +99,13 @@ public class SKUModel {
 
   public void setProductModel(ProductModel productModel) {
     this.productModel = productModel;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
   }
 }
